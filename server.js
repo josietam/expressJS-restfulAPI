@@ -45,10 +45,11 @@ router.route('/staff')
     var staffMember = new staff();
 
     staffMember.name = request.body.name;
+    staffMember.age = request.body.age;
 
     staffMember.save(function(error){
       if (error) throw error;
-      response.json({message: staffMember.name + " is our staff now!"});
+      response.json({message: staffMember.name + "(age "+ staffMember.age + ") is our staff now!"});
     });
   })
 
@@ -74,10 +75,11 @@ router.route('/staff/:staffID')
       if (error) throw error;
       var oldName = staff.name;
       staff.name = request.body.name;
+      staff.age = request.body.age;
 
       staff.save(function(error){
         if (error) throw error;
-        response.json({message: 'Now '+ oldName + ' is renamed to ' + staff.name});
+        response.json({message: 'Now '+ oldName + ' is renamed to ' + staff.name + '(aged ' + staff.age + ')'});
       });
     });
   })
