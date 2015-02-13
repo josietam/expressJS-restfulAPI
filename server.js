@@ -1,3 +1,4 @@
+
 // BASE SETUP
 // =============================================================================
 var mongoose    = require('mongoose');
@@ -13,6 +14,7 @@ var staff     = require('./app/models/staff');
 var express     = require('express');
 var app         = express();
 var bodyParser  = require('body-parser');
+
 
 // configure app to use bodyParser()
 // this will let us get the data from a POST
@@ -42,6 +44,10 @@ router.get('/', function(request, response){
 // ----------------------------------------------------
 router.route('/staff')
   .post(function(request, response){
+    //CORS setup
+    response.header("Access-Control-Allow-Origin", "*");
+    response.header("Access-Control-Allow-Headers", "X-Requested-With");
+
     var staffMember = new staff();
 
     staffMember.name = request.body.name;
@@ -49,11 +55,15 @@ router.route('/staff')
 
     staffMember.save(function(error){
       if (error) throw error;
-      response.json({message: staffMember.name + "(age "+ staffMember.age + ") is our staff now!"});
+      //response.json({message: staffMember.name + "(age "+ staffMember.age + ") is our staff now!"});
     });
   })
 
   .get(function(request, response){
+    //CORS setup
+    response.header("Access-Control-Allow-Origin", "*");
+    response.header("Access-Control-Allow-Headers", "X-Requested-With");
+
     staff.find(function(error, staff){
       if (error) throw error;
       response.json(staff);
@@ -63,7 +73,11 @@ router.route('/staff')
 // on routes that end in /bears/:bear_id
 // ----------------------------------------------------
 router.route('/staff/:staffID')
-  .get(function(request, response){
+  .get(function(request, response, corsActivate){
+    //CORS setup
+    response.header("Access-Control-Allow-Origin", "*");
+    response.header("Access-Control-Allow-Headers", "X-Requested-With");
+
     staff.findById(request.params.staffID, function(error, staff){
       if (error) throw error;
       response.json(staff);
@@ -71,6 +85,10 @@ router.route('/staff/:staffID')
   })
 
   .put(function(request, response){
+    //CORS setup
+    response.header("Access-Control-Allow-Origin", "*");
+    response.header("Access-Control-Allow-Headers", "X-Requested-With");
+
     staff.findById(request.params.staffID, function(error, staff){
       if (error) throw error;
       var oldName = staff.name;
@@ -79,17 +97,21 @@ router.route('/staff/:staffID')
 
       staff.save(function(error){
         if (error) throw error;
-        response.json({message: 'Now '+ oldName + ' is renamed to ' + staff.name + '(aged ' + staff.age + ')'});
+        //response.json({message: 'Now '+ oldName + ' is renamed to ' + staff.name + '(aged ' + staff.age + ')'});
       });
     });
   })
 
   .delete(function(request, response){
+    //CORS setup
+    response.header("Access-Control-Allow-Origin", "*");
+    response.header("Access-Control-Allow-Headers", "X-Requested-With");
+
     staff.remove({_id: request.params.staffID}, function(error, staff){
     var oldName = request.params.staffID;
 
     if (error) throw error;
-      response.json({message: oldName + ' is no longer our staff!'});
+      //response.json({message: oldName + ' is no longer our staff!'});
     });
   })
 
