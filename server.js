@@ -52,10 +52,13 @@ router.route('/staff')
 
     staffMember.name = request.body.name;
     staffMember.age = request.body.age;
+    staffMember.address = request.body.address;
+
+    console.log(staffMember);
 
     staffMember.save(function(error){
       if (error) throw error;
-      //response.json({message: staffMember.name + "(age "+ staffMember.age + ") is our staff now!"});
+      response.json(staffMember);
     });
   })
 
