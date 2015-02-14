@@ -6,7 +6,8 @@ var staffSchema   = new Schema({
 //    title: String,
 //    details: String
       name: String,
-      age: Number
+      age: Number,
+      address: String
 });
 
 module.exports = mongoose.model('staff', staffSchema);
